@@ -1,8 +1,9 @@
 import express ,{Request, Response} from 'express';
 import dotenv from 'dotenv'
 import mongoose, { ConnectOptions } from 'mongoose';
+import Contact from './model/User'
 dotenv.config();
-import {User} from './model/User'
+
 
 const app  = express();
 // const port = 3000;
@@ -10,16 +11,13 @@ const PORT: any = process.env.PORT||8000;
 const db_uri : any = process.env.DB_URL;
 
 
-
-
-
-
-
 mongoose.set('strictQuery', false) 
+// mongoose.set('useCreateIndex', true);
 
 mongoose.connect(db_uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  // useCreateIndex: true
 } as ConnectOptions)
 
 
@@ -30,6 +28,9 @@ mongoose.connection.on('connected',()=>{
 mongoose.connection.on('error',()=>{
   console.error("error connecting to mongodb server")
 })
+
+
+
 
 
 
