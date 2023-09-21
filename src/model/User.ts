@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import validator from 'validator';
 
 const userSchema = new mongoose.Schema({
@@ -23,6 +23,51 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+const contactSchema = new mongoose.Schema({
+  name: {
+    type:String,
+    required: [true, 'please provide you name']
+  },
+  email: {
+    type: String,
+    required:[true,'please provide you email '],
+    validate:[validator.isEmail,'please provide a valid email'],
+    lowercase:true,
+    unique:true,
+
+  },
+  phone : 
+  {
+    type:Number,
+    required:[true,"please provide your number"],
+    validate: [validator.isNumeric,'please provide number only'],
+
+  },
+  company : {
+    type:String ,
+    required:[true, 'please provide company name'],
+  }
+});
+
+
+const leadSchema = new mongoose.Schema({
+  name: {
+    type:String,
+    required: [true, "plese provide the name"],
+  },
+  source: {
+    type:String,
+    required: [true, 'please provide source']
+  },
+  status: {
+    type: String
+  }, // e.g., Cold, Warm, Hot
+  assignedTo: { type: Schema.Types.ObjectId, ref: 'User' }, // Reference to the user who is assigned to this lead
+  // Additional fields as needed
+});
+
+
+
 userSchema.pre('save', async function (next) {
   const salt = await bcrypt.genSalt();
   this.password = await bcrypt.hash(this.password, salt);
@@ -31,4 +76,8 @@ userSchema.pre('save', async function (next) {
 
 const User = mongoose.model('User', userSchema);
 
-export { User }; // Use 'export' instead of 'module.exports'
+const Contact = mongoose.model('Contact',contactSchema);
+
+const Lead = mongoose.model('Lead',leadSchema);
+
+export={ User , Contact, Lead}; // Use 'export' instead of 'module.exports'
