@@ -1,7 +1,7 @@
 import express ,{Request, Response} from 'express';
 import dotenv from 'dotenv'
 import mongoose, { ConnectOptions } from 'mongoose';
-import Contact from './model/User'
+
 dotenv.config();
 
 
@@ -11,13 +11,12 @@ const PORT: any = process.env.PORT||8000;
 const db_uri : any = process.env.DB_URL;
 
 
+
 mongoose.set('strictQuery', false) 
-// mongoose.set('useCreateIndex', true);
 
 mongoose.connect(db_uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  // useCreateIndex: true
 } as ConnectOptions)
 
 
@@ -30,13 +29,10 @@ mongoose.connection.on('error',()=>{
 })
 
 
+const loginRoute = require('./routes/login')
 
 
-
-
-app.get('/', (req : Request, res : Response) => {
-  res.send('Hello, Express with TypeScript!');
-});
+app.use('/login', loginRoute)
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

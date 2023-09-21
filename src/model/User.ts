@@ -4,20 +4,20 @@ import validator from 'validator';
 
 const userSchema = new mongoose.Schema({
   email: {
-    type: String, // Use actual JavaScript type 'String'
+    type: String, 
     required: [true, 'Please enter an email'],
     validate: [validator.isEmail, 'Please provide a valid email'],
     lowercase: true,
     unique: true,
   },
   username: {
-    type: String, // Use actual JavaScript type 'String'
+    type: String, 
     required: [true, 'Please enter a Username'],
     lowercase: true,
     unique: true,
   },
   password: {
-    type: String, // Use actual JavaScript type 'String'
+    type: String,
     required: [true, 'Please enter a password'],
     minlength: [6, 'Minimum length of password should be 6'],
   },
@@ -61,7 +61,7 @@ const leadSchema = new mongoose.Schema({
   },
   status: {
     type: String
-  }, // e.g., Cold, Warm, Hot
+  }, 
   assignedTo: { type: Schema.Types.ObjectId, ref: 'User' }, // Reference to the user who is assigned to this lead
   // Additional fields as needed
 });
