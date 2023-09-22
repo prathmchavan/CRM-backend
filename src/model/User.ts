@@ -3,7 +3,7 @@ import mongoose, { Schema } from 'mongoose';
 import validator from 'validator';
 
 const userSchema = new mongoose.Schema({
-  email: {
+  email:  {
     type: String, 
     required: [true, 'Please enter an email'],
     validate: [validator.isEmail, 'Please provide a valid email'],
