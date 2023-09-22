@@ -1,11 +1,14 @@
 import express ,{Request, Response} from 'express';
 import dotenv from 'dotenv'
 import mongoose, { ConnectOptions } from 'mongoose';
+import loginRoute from './routes/login'
+import bodyParser  from 'body-parser';
 
 dotenv.config();
 
 
 const app  = express();
+app.use(bodyParser.json());
 // const port = 3000;
 const PORT: any = process.env.PORT||8000;
 const db_uri : any = process.env.DB_URL;
@@ -29,7 +32,7 @@ mongoose.connection.on('error',()=>{
 })
 
 
-const loginRoute = require('./routes/login')
+
 
 
 app.use('/login', loginRoute)
